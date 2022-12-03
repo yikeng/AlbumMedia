@@ -1,0 +1,193 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/m_bar_root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/m_root_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="48dp"
+        android:background="@color/photos_bg_primary"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/m_top_bar_layout"
+            style="?metaButtonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/photos_status_bar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/m_top_bar"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_gravity="top"
+                android:background="@color/photos_bar_primary"
+                android:clickable="true"
+                android:fitsSystemWindows="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="42dp"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@drawable/ic_arrow_back_easy_photos" />
+
+                <View
+                    android:id="@+id/m_back_line"
+                    android:layout_width="1dp"
+                    android:layout_height="22dp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/photos_bar_primary_dark"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/iv_back"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.demons.media.ui.widget.PressedTextView
+                    android:id="@+id/tv_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:textColor="@color/photos_fg_primary"
+                    app:layout_constraintStart_toEndOf="@+id/m_back_line" />
+
+                <com.demons.media.ui.widget.PressedTextView
+                    android:id="@+id/tv_done"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_menu_done_easy_photos"
+                    android:gravity="center"
+                    android:maxWidth="200dp"
+                    android:padding="6dp"
+                    android:textColor="@color/menu_text_photos"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+
+        <com.demons.media.ui.widget.PreviewRecyclerView
+            android:id="@+id/rv_photos"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <FrameLayout
+            android:id="@+id/fl_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <fragment
+                android:id="@+id/fragment_preview"
+                android:name="com.demons.media.ui.PreviewFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/m_bottom_bar"
+        style="?metaButtonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom"
+        android:background="@color/photos_bar_primary_translation"
+        android:clickable="true"
+        android:fitsSystemWindows="true"
+        android:focusable="true">
+
+        <com.demons.media.ui.widget.PressedTextView
+            android:id="@+id/tv_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/edit_easy_photos"
+            android:textColor="@color/photos_fg_primary"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fl_fragment" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fl_fragment"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/tv_original"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/selector_original"
+                android:paddingHorizontal="2dp"
+                android:text="@string/original_easy_photos"
+                android:textColor="@color/photos_fg_primary"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/original_all_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#B0B0B0"
+                android:textSize="8sp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_original" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/tv_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/selector_easy_photos"
+            android:textColor="@color/photos_fg_primary"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/iv_selector"
+            app:layout_constraintTop_toBottomOf="@+id/fl_fragment"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingStart="6dp"
+            android:paddingEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fl_fragment"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_selector_easy_photos" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
