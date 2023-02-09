@@ -78,13 +78,13 @@
                     android:textSize="15sp" />
 
                 <View
-                    isShow="@{config.showSingleOperateMode}"
+                    android:visibility="@{config.showSingleOperateMode}"
                     android:layout_width="0.5dp"
                     android:layout_height="50dp"
                     android:background="#E9E9E9" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    isShow="@{config.showSingleOperateMode}"
+                    android:visibility="@{config.showSingleOperateMode}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

@@ -24,17 +24,17 @@ class MediaConfirmDialog(private val config: Config) :
 
     inner class OnClickListener {
         fun cancel() {
-            onOperateListener.cancel()
+            onOperateListener?.cancel()
             dismiss()
         }
 
         fun confirm() {
-            onOperateListener.confirm()
+            onOperateListener?.confirm()
             dismiss()
         }
     }
 
-    private lateinit var onOperateListener: OnOperateListener
+    private  var onOperateListener: OnOperateListener?=null
 
     fun setOnOnOperateListener(onOperateListener1: OnOperateListener) {
         this.onOperateListener = onOperateListener1
@@ -57,6 +57,6 @@ class MediaConfirmDialog(private val config: Config) :
         //确认弹窗是否显示描述
         var votingConfirmDialogDesIsShow: Int = View.GONE,
         //是否展示两个操作按钮
-        var showSingleOperateMode: Boolean = false
+        var showSingleOperateMode: Int = View.GONE
     )
 }

@@ -155,6 +155,17 @@
             app:layout_constraintTop_toTopOf="@+id/tv_album_items"
             app:srcCompat="@drawable/ic_album_items_name_easy_photos" />
 
+        <TextView
+            android:id="@+id/tv_original_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/original_easy_photos"
+            android:textColor="@color/photos_fg_primary"
+            app:layout_constraintBottom_toBottomOf="@+id/m_bottom_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/m_bottom_bar" />
+
         <ImageView
             android:id="@+id/iv_second_menu"
             android:layout_width="wrap_content"

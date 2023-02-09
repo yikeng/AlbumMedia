@@ -91,6 +91,7 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
     private var currAlbumItemIndex = 0
     private var ivCamera: ImageView? = null
     private var tvTitle: TextView? = null
+    private var tvOriginalMenu: TextView? = null
     private var mSecondMenus: LinearLayout? = null
     private var permissionView: RelativeLayout? = null
     private var tvPermission: TextView? = null
@@ -139,6 +140,9 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
         }
         findViewById<View>(R.id.iv_second_menu).visibility =
             if (Setting.showBottomMenu) View.VISIBLE else View.GONE
+        tvOriginalMenu = findViewById(R.id.tv_original_menu)
+        tvOriginalMenu?.visibility =
+            if (Setting.showOriginalMenu) View.VISIBLE else View.GONE
         setClick(R.id.iv_back)
     }
 
@@ -676,7 +680,13 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
         tvPreview = findViewById(R.id.tv_preview)
         initAlbumItems()
         shouldShowMenuDone()
-        setClick(R.id.iv_album_items, R.id.tv_clear, R.id.iv_second_menu, R.id.tv_puzzle)
+        setClick(
+            R.id.iv_album_items,
+            R.id.tv_clear,
+            R.id.iv_second_menu,
+            R.id.tv_puzzle,
+            R.id.tv_original_menu
+        )
         setClick(
             tvAlbumItems!!,
             rootViewAlbumItems!!,
@@ -727,7 +737,7 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
             photosAdapter!!.change()
             shouldShowMenuDone()
             processSecondMenu()
-        } else if (R.id.tv_original == id) {
+        } else if (R.id.tv_original == id ) {
             if (!Setting.originalMenuUsable) {
                 MediaConfirmDialog(
                     MediaConfirmDialog.Config(
@@ -743,6 +753,9 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
             Setting.selectedOriginal = !Setting.selectedOriginal
             processOriginalMenu()
             processSecondMenu()
+        } else if (R.id.tv_original_menu == id) {
+            Setting.selectedOriginal = !Setting.selectedOriginal
+            processOriginalMenu()
         } else if (R.id.tv_preview == id) {
             PreviewActivity.start(this@PhotosActivity, -1, 0)
         } else if (R.id.fab_camera == id) {
@@ -826,6 +839,7 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
         if (!Setting.showOriginalMenu) return
         if (Setting.selectedOriginal) {
             tvOriginal!!.setTextColor(ContextCompat.getColor(this, R.color.photos_fg_accent))
+            tvOriginalMenu?.setTextColor(ContextCompat.getColor(this, R.color.photos_fg_accent))
         } else {
             if (Setting.originalMenuUsable) {
                 tvOriginal!!.setTextColor(
@@ -834,8 +848,20 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
                         R.color.photos_fg_primary
                     )
                 )
+                tvOriginalMenu?.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.photos_fg_primary
+                    )
+                )
             } else {
                 tvOriginal!!.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.photos_fg_primary_dark
+                    )
+                )
+                tvOriginalMenu?.setTextColor(
                     ContextCompat.getColor(
                         this,
                         R.color.photos_fg_primary_dark
