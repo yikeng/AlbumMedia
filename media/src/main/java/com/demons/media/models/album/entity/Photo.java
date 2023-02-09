@@ -5,6 +5,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 /**
  * 图片item实体类
  */
@@ -49,16 +51,22 @@ public class Photo implements Parcelable {
         return super.equals(o);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Photo{" +
-                "name='" + name + '\'' +
-                ", uri='" + uri.toString() + '\'' +
+                "uri=" + uri +
+                ", name='" + name + '\'' +
                 ", path='" + path + '\'' +
-                ", time=" + time + '\'' +
-                ", minWidth=" + width + '\'' +
-                ", minHeight=" + height +
+                ", type='" + type + '\'' +
+                ", width=" + width +
+                ", height=" + height +
                 ", orientation=" + orientation +
+                ", size=" + size +
+                ", duration=" + duration +
+                ", time=" + time +
+                ", selected=" + selected +
+                ", selectedOriginal=" + selectedOriginal +
                 '}';
     }
 

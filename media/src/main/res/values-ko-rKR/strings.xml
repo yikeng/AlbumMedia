@@ -38,4 +38,7 @@
     <string name="select_puzzle_photos">사진 2\- 9개를 선택하세요. </string>
     <string name="gif_easy_photos">애니메이션</string>
     <string name="video_easy_photos">동영상</string>
+    <string name="max_select_notice">你最多只能选择%d个图片或视频</string>
+    <string name="i_got_it">我知道了</string>
+    <string name="video_over_limit_notice">无法发送超过1GB的原视频,请重新选择</string>
 </resources>

@@ -18,7 +18,7 @@ import com.demons.media.R;
 public class ToastUtil {
 
     private static Toast toast;
-    private static Handler mHandler = new Handler();
+    private static final Handler mHandler = new Handler();
     private static Runnable r = new Runnable() {
         @Override
         public void run() {
