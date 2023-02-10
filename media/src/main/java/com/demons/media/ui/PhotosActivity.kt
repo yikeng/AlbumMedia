@@ -31,6 +31,8 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatCheckBox
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.exifinterface.media.ExifInterface
 import androidx.recyclerview.widget.GridLayoutManager
@@ -48,6 +50,7 @@ import com.demons.media.models.album.AlbumModel
 import com.demons.media.models.album.AlbumModel.CallBack
 import com.demons.media.models.album.entity.Photo
 import com.demons.media.result.Result
+import com.demons.media.result.Result.photos
 import com.demons.media.setting.Setting
 import com.demons.media.ui.adapter.AlbumItemsAdapter
 import com.demons.media.ui.adapter.PhotosAdapter
@@ -57,6 +60,7 @@ import com.demons.media.ui.widget.PressedTextView
 import com.demons.media.utils.Color.ColorUtils
 import com.demons.media.utils.String.StringUtils
 import com.demons.media.utils.bitmap.BitmapUtils
+import com.demons.media.utils.file.FileUtils
 import com.demons.media.utils.media.DurationUtils
 import com.demons.media.utils.media.MediaScannerConnectionUtils
 import com.demons.media.utils.permission.PermissionUtil
@@ -69,7 +73,8 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListener,
+@SuppressLint("ObjectAnimatorBinding")
+class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListener,
     PhotosAdapter.OnClickListener, AdListener, View.OnClickListener {
     private var mTempImageFile: File? = null
     private var albumModel: AlbumModel? = null
@@ -91,9 +96,10 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
     private var currAlbumItemIndex = 0
     private var ivCamera: ImageView? = null
     private var tvTitle: TextView? = null
-    private var tvOriginalMenu: TextView? = null
+    private var tvOriginalMenu: AppCompatCheckBox? = null
+    private var originalAllSize: TextView? = null
     private var mSecondMenus: LinearLayout? = null
-    private var permissionView: RelativeLayout? = null
+    private var permissionView: ConstraintLayout? = null
     private var tvPermission: TextView? = null
     private var mBottomBar: View? = null
     private var isQ = false
@@ -140,9 +146,23 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
         }
         findViewById<View>(R.id.iv_second_menu).visibility =
             if (Setting.showBottomMenu) View.VISIBLE else View.GONE
-        tvOriginalMenu = findViewById(R.id.tv_original_menu)
-        tvOriginalMenu?.visibility =
-            if (Setting.showOriginalMenu) View.VISIBLE else View.GONE
+        tvOriginalMenu = findViewById(R.id.tv_original_checkbox)
+        originalAllSize = findViewById<View>(R.id.original_all_size) as TextView
+        tvOriginalMenu!!.setOnCheckedChangeListener { _, isChecked ->
+            Setting.selectedOriginal = isChecked
+            if (isChecked) {
+                originalAllSize!!.visibility = View.VISIBLE
+                calculateFileSize()
+            } else {
+                originalAllSize!!.visibility = View.INVISIBLE
+            }
+        }
+        if (Setting.showOriginalMenu) {
+            tvOriginalMenu?.visibility = View.VISIBLE
+            tvOriginalMenu?.isChecked = Setting.selectedOriginal
+        } else {
+            tvOriginalMenu?.visibility = View.GONE
+        }
         setClick(R.id.iv_back)
     }
 
@@ -684,8 +704,7 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
             R.id.iv_album_items,
             R.id.tv_clear,
             R.id.iv_second_menu,
-            R.id.tv_puzzle,
-            R.id.tv_original_menu
+            R.id.tv_puzzle
         )
         setClick(
             tvAlbumItems!!,
@@ -737,7 +756,7 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
             photosAdapter!!.change()
             shouldShowMenuDone()
             processSecondMenu()
-        } else if (R.id.tv_original == id ) {
+        } else if (R.id.tv_original == id) {
             if (!Setting.originalMenuUsable) {
                 MediaConfirmDialog(
                     MediaConfirmDialog.Config(
@@ -753,9 +772,6 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
             Setting.selectedOriginal = !Setting.selectedOriginal
             processOriginalMenu()
             processSecondMenu()
-        } else if (R.id.tv_original_menu == id) {
-            Setting.selectedOriginal = !Setting.selectedOriginal
-            processOriginalMenu()
         } else if (R.id.tv_preview == id) {
             PreviewActivity.start(this@PhotosActivity, -1, 0)
         } else if (R.id.fab_camera == id) {
@@ -839,7 +855,6 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
         if (!Setting.showOriginalMenu) return
         if (Setting.selectedOriginal) {
             tvOriginal!!.setTextColor(ContextCompat.getColor(this, R.color.photos_fg_accent))
-            tvOriginalMenu?.setTextColor(ContextCompat.getColor(this, R.color.photos_fg_accent))
         } else {
             if (Setting.originalMenuUsable) {
                 tvOriginal!!.setTextColor(
@@ -848,20 +863,8 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
                         R.color.photos_fg_primary
                     )
                 )
-                tvOriginalMenu?.setTextColor(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.photos_fg_primary
-                    )
-                )
             } else {
                 tvOriginal!!.setTextColor(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.photos_fg_primary_dark
-                    )
-                )
-                tvOriginalMenu?.setTextColor(
                     ContextCompat.getColor(
                         this,
                         R.color.photos_fg_primary_dark
@@ -981,6 +984,7 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
             R.string.selector_action_done_easy_photos, Result.count(),
             Setting.count
         )
+        calculateFileSize()
     }
 
     override fun onCameraClick() {
@@ -989,6 +993,12 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
 
     override fun onPhotoClick(position: Int, realPosition: Int) {
         PreviewActivity.start(this@PhotosActivity, currAlbumItemIndex, realPosition)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tvOriginalMenu?.isChecked = Setting.selectedOriginal
+        calculateFileSize()
     }
 
     override fun onSelectorOutOfMax(result: Int?) {
@@ -1009,7 +1019,8 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
                 MediaConfirmDialog(
                     MediaConfirmDialog.Config(
                         getString(
-                            R.string.selector_reach_max_hint_easy_photos
+                            R.string.max_select_notice,
+                            Setting.count
                         ),
                         getString(R.string.i_got_it)
                     )
@@ -1145,6 +1156,19 @@ open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListen
             }
         }
         return isCanUse
+    }
+
+    private fun calculateFileSize() {
+        if (Setting.selectedOriginal) {
+            var allSize: Long = 0
+            for (i in photos) {
+                if (i.selected) {
+                    allSize += i.size
+                }
+            }
+            originalAllSize!!.text =
+                String.format("共%s", FileUtils.getReadableFileSize(allSize.toInt()))
+        }
     }
 
     companion object {

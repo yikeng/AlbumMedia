@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
@@ -16,6 +17,7 @@ import android.view.animation.AccelerateInterpolator
 import android.widget.RelativeLayout
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,7 +35,7 @@ import com.demons.media.ui.dialog.MediaConfirmDialog
 import com.demons.media.ui.widget.PressedTextView
 import com.demons.media.utils.Color.ColorUtils
 import com.demons.media.utils.system.SystemUtils
-
+@SuppressLint("ObjectAnimatorBinding")
 class PuzzleSelectorActivity : AppCompatActivity(), View.OnClickListener,
     AlbumItemsAdapter.OnClickListener, PuzzleSelectorAdapter.OnClickListener,
     PuzzleSelectorPreviewAdapter.OnClickListener {
@@ -41,7 +43,7 @@ class PuzzleSelectorActivity : AppCompatActivity(), View.OnClickListener,
     private var setShow: AnimatorSet? = null
     private var setHide: AnimatorSet? = null
     private var rootViewAlbumItems: RelativeLayout? = null
-    private var rootSelectorView: RelativeLayout? = null
+    private var rootSelectorView: ConstraintLayout? = null
     private var rvAlbumItems: RecyclerView? = null
     private var albumItemsAdapter: AlbumItemsAdapter? = null
     private var tvAlbumItems: PressedTextView? = null
@@ -77,7 +79,7 @@ class PuzzleSelectorActivity : AppCompatActivity(), View.OnClickListener,
         setClick(R.id.iv_back)
         tvAlbumItems = findViewById<View>(R.id.tv_album_items) as PressedTextView
         tvAlbumItems!!.text = albumModel!!.albumItems[0].name
-        rootSelectorView = findViewById<View>(R.id.m_selector_root) as RelativeLayout
+        rootSelectorView = findViewById(R.id.m_selector_root)
         tvDone = findViewById<View>(R.id.tv_done) as PressedTextView
         tvDone!!.setOnClickListener(this)
         tvAlbumItems!!.setOnClickListener(this)

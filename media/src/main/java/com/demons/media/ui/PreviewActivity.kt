@@ -198,6 +198,7 @@ class PreviewActivity : AppCompatActivity(), PreviewPhotosAdapter.OnClickListene
             Setting.selectedOriginal = isChecked
             if (isChecked) {
                 originalAllSize!!.visibility = View.VISIBLE
+                calculateFileSize()
             } else {
                 originalAllSize!!.visibility = View.INVISIBLE
             }
@@ -206,10 +207,18 @@ class PreviewActivity : AppCompatActivity(), PreviewPhotosAdapter.OnClickListene
         previewFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_preview) as PreviewFragment?
         if (Setting.showOriginalMenu) {
-            tvOriginal!!.isChecked = Setting.selectedOriginal
+            tvOriginal?.visibility = View.VISIBLE
+            tvOriginal?.isChecked = Setting.selectedOriginal
+            if ( Setting.selectedOriginal) {
+                originalAllSize!!.visibility = View.VISIBLE
+                calculateFileSize()
+            } else {
+                originalAllSize!!.visibility = View.INVISIBLE
+            }
         } else {
             tvOriginal!!.visibility = View.GONE
         }
+        calculateFileSize()
         setClick(tvDone!!, ivSelector!!)
         initRecyclerView()
         shouldShowMenuDone()
@@ -321,7 +330,7 @@ class PreviewActivity : AppCompatActivity(), PreviewPhotosAdapter.OnClickListene
                 MediaConfirmDialog(
                     MediaConfirmDialog.Config(
                         getString(
-                            R.string.selector_reach_max_hint_easy_photos,
+                            R.string.max_select_notice,
                             Setting.count
                         ),
                         getString(R.string.i_got_it)
@@ -433,8 +442,13 @@ class PreviewActivity : AppCompatActivity(), PreviewPhotosAdapter.OnClickListene
 
     private val allSize: Unit
         get() {
+            calculateFileSize()
+        }
+
+    private fun calculateFileSize() {
+        if(Setting.selectedOriginal){
             var allSize: Long = 0
-            for (i in photos) {
+            for (i in Result.photos) {
                 if (i.selected) {
                     allSize += i.size
                 }
@@ -442,6 +456,7 @@ class PreviewActivity : AppCompatActivity(), PreviewPhotosAdapter.OnClickListene
             originalAllSize!!.text =
                 String.format("共%s", FileUtils.getReadableFileSize(allSize.toInt()))
         }
+    }
 
     private fun singleSelector(photo: Photo) {
         if (!Result.isEmpty()) {

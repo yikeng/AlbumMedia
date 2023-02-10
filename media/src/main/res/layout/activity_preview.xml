@@ -1,5 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/m_bar_root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,7 +31,7 @@
                 android:fitsSystemWindows="true"
                 android:focusable="true">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_back"
                     android:layout_width="42dp"
                     android:layout_height="match_parent"
@@ -80,9 +81,9 @@
 
         <com.demons.media.ui.widget.PreviewRecyclerView
             android:id="@+id/rv_photos"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
         <FrameLayout
             android:id="@+id/fl_fragment"
@@ -95,7 +96,8 @@
                 android:id="@+id/fragment_preview"
                 android:name="com.demons.media.ui.PreviewFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:layout="@layout/fragment_preview" />
         </FrameLayout>
 
 
@@ -123,10 +125,8 @@
             android:paddingRight="16dp"
             android:text="@string/edit_easy_photos"
             android:textColor="@color/photos_fg_primary"
-            android:textStyle="bold"
             android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fl_fragment" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -134,7 +134,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fl_fragment"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatCheckBox
@@ -145,7 +144,6 @@
                 android:paddingHorizontal="2dp"
                 android:text="@string/original_easy_photos"
                 android:textColor="@color/photos_fg_primary"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -160,7 +158,8 @@
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_original" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_original"
+                tools:ignore="SmallSp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -171,13 +170,11 @@
             android:gravity="center"
             android:text="@string/selector_easy_photos"
             android:textColor="@color/photos_fg_primary"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/iv_selector"
-            app:layout_constraintTop_toBottomOf="@+id/fl_fragment"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_selector"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -185,7 +182,6 @@
             android:paddingEnd="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fl_fragment"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_selector_easy_photos" />
 

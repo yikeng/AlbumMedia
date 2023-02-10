@@ -14,13 +14,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,7 +46,6 @@ import com.demons.media.utils.media.DurationUtils;
 import com.demons.media.utils.permission.PermissionUtil;
 import com.demons.media.utils.settings.SettingsUtils;
 import com.demons.media.utils.uri.UriUtils;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
@@ -161,12 +160,12 @@ public class PuzzleActivity extends AppCompatActivity implements View.OnClickLis
     private int deviceHeight = 0;
 
     private TextView tvTemplate, tvTextSticker;
-    private RelativeLayout mRootView, mBottomLayout;
+    private ConstraintLayout mRootView, mBottomLayout;
     private TextStickerAdapter textStickerAdapter;
 
     private StickerModel stickerModel;
 
-    FloatingActionButton fab;
+    ImageView fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,12 +195,12 @@ public class PuzzleActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initIvMenu() {
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
 
         tvTemplate = (TextView) findViewById(R.id.tv_template);
         tvTextSticker = (TextView) findViewById(R.id.tv_text_sticker);
-        mRootView = (RelativeLayout) findViewById(R.id.m_root_view);
-        mBottomLayout = (RelativeLayout) findViewById(R.id.m_bottom_layout);
+        mRootView = (ConstraintLayout) findViewById(R.id.m_root_view);
+        mBottomLayout = (ConstraintLayout) findViewById(R.id.m_bottom_layout);
 
         llMenu = (LinearLayout) findViewById(R.id.ll_menu);
         ImageView ivRotate = (ImageView) findViewById(R.id.iv_rotate);

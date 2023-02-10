@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/photos_bg_primary"
-        tools:context="com.demons.media.ui.PhotosActivity">
+        android:background="@color/photos_bg_primary">
 
         <View
             android:id="@+id/m_tool_bar"
@@ -34,7 +30,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/m_tool_bar_bottom_line" />
-
 
         <RelativeLayout
             android:id="@+id/root_view_album_items"
@@ -136,9 +131,7 @@
             android:gravity="center"
             android:minWidth="70dp"
             android:paddingStart="16dp"
-            android:paddingLeft="16dp"
             android:paddingEnd="6dp"
-            android:paddingRight="6dp"
             android:text="@string/selector_folder_all_easy_photos"
             android:textColor="@color/photos_fg_primary"
             app:layout_constraintBottom_toBottomOf="@+id/m_bottom_bar"
@@ -155,22 +148,46 @@
             app:layout_constraintTop_toTopOf="@+id/tv_album_items"
             app:srcCompat="@drawable/ic_album_items_name_easy_photos" />
 
-        <TextView
-            android:id="@+id/tv_original_menu"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/original_easy_photos"
-            android:textColor="@color/photos_fg_primary"
             app:layout_constraintBottom_toBottomOf="@+id/m_bottom_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/m_bottom_bar" />
+            app:layout_constraintTop_toTopOf="@+id/m_bottom_bar">
 
-        <ImageView
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/tv_original_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/selector_original"
+                android:paddingHorizontal="2dp"
+                android:text="@string/original_easy_photos"
+                android:textColor="@color/photos_fg_primary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/original_all_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#B0B0B0"
+                android:textSize="8sp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_original_checkbox" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_second_menu"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:padding="13dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/m_bottom_bar"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -213,7 +230,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/m_tool_bar" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_back"
             android:layout_width="42dp"
             android:layout_height="42dp"
@@ -228,7 +245,6 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:gravity="center"
             android:text="@string/picture_selection_easy_photos"
             android:textColor="@color/photos_fg_primary"
@@ -242,7 +258,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:background="@drawable/bg_menu_done_easy_photos"
             android:gravity="center"
             android:padding="6dp"
@@ -254,7 +269,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/m_tool_bar" />
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rl_permissions_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -269,20 +284,24 @@
                 android:id="@+id/tv_permission"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:textColor="@color/photos_fg_accent"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_above="@+id/tv_permission"
-                android:layout_centerHorizontal="true"
                 android:layout_marginBottom="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_permission"
                 app:srcCompat="@drawable/ic_notifications_easy_photos" />
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/fab_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

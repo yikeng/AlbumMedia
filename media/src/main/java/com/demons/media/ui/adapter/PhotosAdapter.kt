@@ -1,13 +1,13 @@
 package com.demons.media.ui.adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.demons.media.R
 import com.demons.media.constant.Type
@@ -15,8 +15,8 @@ import com.demons.media.models.ad.AdViewHolder
 import com.demons.media.models.album.entity.Photo
 import com.demons.media.result.Result
 import com.demons.media.setting.Setting
-import com.demons.media.ui.dialog.MediaConfirmDialog
 import com.demons.media.ui.widget.PressedImageView
+import com.demons.media.utils.ToastUtil
 import com.demons.media.utils.media.DurationUtils
 import java.lang.ref.WeakReference
 
@@ -24,7 +24,7 @@ import java.lang.ref.WeakReference
  * 专辑相册适配器
  */
 class PhotosAdapter(
-    private val cxt: AppCompatActivity,
+    private val cxt: Context,
     private val dataList: ArrayList<Any?>,
     private val listener: OnClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -41,7 +41,7 @@ class PhotosAdapter(
 
     fun change() {
         unable = Result.count() == Setting.count
-        notifyItemRangeChanged(0, dataList.size)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -119,7 +119,7 @@ class PhotosAdapter(
                                 unable = false
                             }
                             listener.onSelectorChanged()
-                            notifyItemRangeChanged(0,dataList.size)
+                            notifyDataSetChanged()
                             return
                         }
                         listener.onSelectorOutOfMax(null)
@@ -128,28 +128,12 @@ class PhotosAdapter(
                     item.selected = !item.selected
                     if (item.selected) {
                         if (item.type.contains(Type.VIDEO) && item.size > Setting.videoMaxSize) {
-                            MediaConfirmDialog(
-                                MediaConfirmDialog.Config(
-                                    cxt. getString(R.string.selector_video_max_size),
-                                    cxt. getString(R.string.i_got_it)
-                                )
-                            ).show(
-                                cxt. supportFragmentManager,
-                                System.currentTimeMillis().toString()
-                            )
+                            ToastUtil.show(cxt, R.string.selector_video_max_size)
                             item.selected = false
                             return
                         }
                         if (!item.type.contains(Type.VIDEO) && item.size > Setting.photoMaxSize) {
-                            MediaConfirmDialog(
-                                MediaConfirmDialog.Config(
-                                    cxt. getString(R.string.selector_photo_max_size),
-                                    cxt. getString(R.string.i_got_it)
-                                )
-                            ).show(
-                                cxt. supportFragmentManager,
-                                System.currentTimeMillis().toString()
-                            )
+                            ToastUtil.show(cxt, R.string.selector_photo_max_size)
                             item.selected = false
                             return
                         }
@@ -163,14 +147,14 @@ class PhotosAdapter(
                         holder.tvSelector.text = Result.count().toString()
                         if (Result.count() == Setting.count) {
                             unable = true
-                            notifyItemRangeChanged(0,dataList.size)
+                            notifyDataSetChanged()
                         }
                     } else {
                         Result.removePhoto(item)
                         if (unable) {
                             unable = false
                         }
-                        notifyItemRangeChanged(0,dataList.size)
+                        notifyDataSetChanged()
                     }
                     listener.onSelectorChanged()
                 }
@@ -187,7 +171,7 @@ class PhotosAdapter(
                 holder.adFrame.visibility = View.GONE
                 return
             }
-            val weakReference: WeakReference<*> = dataList[position] as WeakReference<*>
+            val weakReference: WeakReference<Any> = dataList[position] as WeakReference<Any>
             val adView = weakReference.get() as View?
             if (null != adView) {
                 if (null != adView.parent) {
@@ -207,7 +191,7 @@ class PhotosAdapter(
 
     fun clearAd() {
         clearAd = true
-        notifyItemRangeChanged(0,dataList.size)
+        notifyDataSetChanged()
     }
 
     private fun singleSelector(photo: Photo, position: Int) {

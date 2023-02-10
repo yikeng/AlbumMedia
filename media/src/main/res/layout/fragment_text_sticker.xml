@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/text_sticker_editor_fragment_bg_photos">
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
@@ -17,6 +18,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.75" />
+
     <TextView
         android:id="@+id/tv_sample"
         android:layout_width="0dp"
@@ -33,8 +35,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/text_sticker_editor_fragment_bar_photos"
-        android:paddingBottom="8dp"
         android:paddingTop="16dp"
+        android:paddingBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
@@ -65,19 +67,16 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/m_seek_bar" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:background="@drawable/bg_text_sticker_editor_easy_photos"
-            android:paddingBottom="8dp"
-            android:paddingEnd="26dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="26dp"
             android:paddingStart="8dp"
             android:paddingTop="8dp"
+            android:paddingEnd="26dp"
+            android:paddingBottom="8dp"
             android:textColor="@color/photos_fg_accent"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_done"
@@ -85,12 +84,11 @@
             app:layout_constraintRight_toLeftOf="@+id/tv_done"
             app:layout_constraintTop_toTopOf="@+id/tv_done" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_clear"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/et"
             app:layout_constraintRight_toRightOf="@+id/et"
             app:layout_constraintTop_toTopOf="@+id/et"
@@ -107,7 +105,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_done">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_red"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -116,7 +114,7 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_red_easy_photos" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_orange"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -125,7 +123,7 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_orange_easy_photos" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_yellow"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -134,7 +132,7 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_yelow_easy_photos" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_green"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -143,7 +141,7 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_green_easy_photos" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_cyan"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -152,7 +150,7 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_cyan_easy_photos" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_blue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -161,7 +159,7 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_blue_easy_photos" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_purple"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -170,7 +168,7 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_purple_easy_photos" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -179,7 +177,7 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_black_easy_photos" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_gray"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -188,7 +186,7 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_gray_easy_photos" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -199,10 +197,5 @@
 
         </LinearLayout>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
