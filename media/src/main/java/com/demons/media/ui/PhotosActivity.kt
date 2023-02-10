@@ -50,7 +50,6 @@ import com.demons.media.models.album.AlbumModel
 import com.demons.media.models.album.AlbumModel.CallBack
 import com.demons.media.models.album.entity.Photo
 import com.demons.media.result.Result
-import com.demons.media.result.Result.photos
 import com.demons.media.setting.Setting
 import com.demons.media.ui.adapter.AlbumItemsAdapter
 import com.demons.media.ui.adapter.PhotosAdapter
@@ -944,6 +943,7 @@ class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListener,
     }
 
     private fun shouldShowMenuDone() {
+        calculateFileSize()
         if (Result.isEmpty()) {
             if (View.VISIBLE == tvDone!!.visibility) {
                 val scaleHide = ScaleAnimation(1f, 0f, 1f, 0f)
@@ -984,7 +984,6 @@ class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListener,
             R.string.selector_action_done_easy_photos, Result.count(),
             Setting.count
         )
-        calculateFileSize()
     }
 
     override fun onCameraClick() {
@@ -1159,15 +1158,19 @@ class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListener,
     }
 
     private fun calculateFileSize() {
-        if (Setting.selectedOriginal) {
+        if(Setting.selectedOriginal){
             var allSize: Long = 0
-            for (i in photos) {
+            for (i in Result.photos) {
                 if (i.selected) {
                     allSize += i.size
                 }
             }
-            originalAllSize!!.text =
-                String.format("共%s", FileUtils.getReadableFileSize(allSize.toInt()))
+            if(allSize!=0L){
+                originalAllSize?.text =
+                    String.format("共%s", FileUtils.getReadableFileSize(allSize.toInt()))
+            }else{
+                originalAllSize?.text =""
+            }
         }
     }
 

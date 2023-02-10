@@ -453,8 +453,12 @@ class PreviewActivity : AppCompatActivity(), PreviewPhotosAdapter.OnClickListene
                     allSize += i.size
                 }
             }
-            originalAllSize!!.text =
-                String.format("共%s", FileUtils.getReadableFileSize(allSize.toInt()))
+            if(allSize!=0L){
+                originalAllSize?.text =
+                    String.format("共%s", FileUtils.getReadableFileSize(allSize.toInt()))
+            }else{
+                originalAllSize?.text =""
+            }
         }
     }
 

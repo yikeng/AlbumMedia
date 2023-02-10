@@ -378,7 +378,7 @@ public class FileUtils {
                 }
             }
         }
-        return String.valueOf(dec.format(fileSize) + suffix);
+        return dec.format(fileSize) + suffix;
     }
 
     /**

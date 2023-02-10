@@ -70,10 +70,13 @@ class PhotosAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, @SuppressLint("RecyclerView") position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        @SuppressLint("RecyclerView") position: Int
+    ) {
         if (holder is PhotoViewHolder) {
             val item: Photo = dataList[position] as Photo
-            updateSelector(holder.tvSelector, item.selected, item, position)
+            updateSelector(holder.selectedBg, holder.tvSelector, item.selected, item, position)
             val path = item.path
             val uri = item.uri
             val type = item.type
@@ -144,16 +147,19 @@ class PhotosAdapter(
                             return
                         }
                         holder.tvSelector.setBackgroundResource(R.drawable.bg_select_true_easy_photos)
+                        holder.selectedBg.visibility =View.VISIBLE
                         holder.tvSelector.text = Result.count().toString()
                         if (Result.count() == Setting.count) {
                             unable = true
                             notifyDataSetChanged()
                         }
+                        holder.selectedBg.visibility = View.VISIBLE
                     } else {
                         Result.removePhoto(item)
                         if (unable) {
                             unable = false
                         }
+                        holder.selectedBg.visibility = View.GONE
                         notifyDataSetChanged()
                     }
                     listener.onSelectorChanged()
@@ -211,6 +217,7 @@ class PhotosAdapter(
     }
 
     private fun updateSelector(
+        selectedBg: View,
         tvSelector: TextView,
         selected: Boolean,
         photo: Photo,
@@ -220,11 +227,13 @@ class PhotosAdapter(
             val number = Result.getSelectorNumber(photo)
             if ((number == "0")) {
                 tvSelector.setBackgroundResource(R.drawable.bg_select_false_easy_photos)
+                selectedBg.visibility =View.GONE
                 tvSelector.text = null
                 return
             }
             tvSelector.text = number
             tvSelector.setBackgroundResource(R.drawable.bg_select_true_easy_photos)
+            selectedBg.visibility =View.VISIBLE
             if (isSingle) {
                 singlePosition = position
                 tvSelector.text = "1"
@@ -232,8 +241,10 @@ class PhotosAdapter(
         } else {
             if (unable) {
                 tvSelector.setBackgroundResource(R.drawable.bg_select_false_unable_easy_photos)
+                selectedBg.visibility =View.GONE
             } else {
                 tvSelector.setBackgroundResource(R.drawable.bg_select_false_easy_photos)
+                selectedBg.visibility =View.GONE
             }
             tvSelector.text = null
         }
@@ -282,6 +293,7 @@ class PhotosAdapter(
         val vSelector: View
         val tvType: TextView
         val ivVideo: ImageView
+        val selectedBg: View
 
         init {
             ivPhoto = itemView.findViewById(R.id.iv_photo)
@@ -289,6 +301,7 @@ class PhotosAdapter(
             vSelector = itemView.findViewById(R.id.v_selector)
             tvType = itemView.findViewById(R.id.tv_type)
             ivVideo = itemView.findViewById(R.id.iv_play)
+            selectedBg = itemView.findViewById(R.id.selected_bg)
         }
     }
 
