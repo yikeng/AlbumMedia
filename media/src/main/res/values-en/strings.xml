@@ -38,7 +38,7 @@
     <string name="select_puzzle_photos">Please select 2 \- 9 photos</string>
     <string name="gif_easy_photos">Animation</string>
     <string name="video_easy_photos">video</string>
-    <string name="max_select_notice">你最多只能选择%d个图片或视频</string>
-    <string name="i_got_it">我知道了</string>
-    <string name="video_over_limit_notice">无法发送超过1GB的原视频,请重新选择</string>
+    <string name="max_select_notice">You can only select up to %d images or videos</string>
+    <string name="i_got_it">I know</string>
+    <string name="video_over_limit_notice">The original video cannot be sent larger than 1 GB, please select it again</string>
 </resources>

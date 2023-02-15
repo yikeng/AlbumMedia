@@ -92,6 +92,11 @@ class PhotosAdapter(
                 holder.tvType.text = DurationUtils.format(duration)
                 holder.tvType.visibility = View.VISIBLE
                 holder.ivVideo.visibility = View.VISIBLE
+                if(item.size>1024 * 1048576){
+                    holder.noSelectedBg.visibility = View.VISIBLE
+                }else{
+                    holder.noSelectedBg.visibility = View.GONE
+                }
             } else {
                 Setting.imageEngine.loadPhoto(holder.ivPhoto.context, uri, holder.ivPhoto)
                 holder.tvType.visibility = View.GONE
@@ -133,7 +138,7 @@ class PhotosAdapter(
                         if (item.type.contains(Type.VIDEO) && item.size > Setting.videoMaxSize) {
                             MediaConfirmDialog(
                                 MediaConfirmDialog.Config(
-                                    cxt. getString(R.string.selector_video_max_size),
+                                    cxt. getString(R.string.video_over_limit_notice),
                                     cxt. getString(R.string.i_got_it)
                                 )
                             ).show(
@@ -310,6 +315,7 @@ class PhotosAdapter(
         val tvType: TextView
         val ivVideo: ImageView
         val selectedBg: View
+        val noSelectedBg: View
 
         init {
             ivPhoto = itemView.findViewById(R.id.iv_photo)
@@ -318,6 +324,7 @@ class PhotosAdapter(
             tvType = itemView.findViewById(R.id.tv_type)
             ivVideo = itemView.findViewById(R.id.iv_play)
             selectedBg = itemView.findViewById(R.id.selected_bg)
+            noSelectedBg = itemView.findViewById(R.id.no_selected_bg)
         }
     }
 

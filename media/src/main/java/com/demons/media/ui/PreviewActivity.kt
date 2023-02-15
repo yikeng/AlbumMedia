@@ -360,7 +360,7 @@ class PreviewActivity : AppCompatActivity(), PreviewPhotosAdapter.OnClickListene
             if (item.type.contains(Type.VIDEO) && item.size > Setting.videoMaxSize) {
                 MediaConfirmDialog(
                     MediaConfirmDialog.Config(
-                        getString(R.string.selector_video_max_size),
+                        getString(R.string.video_over_limit_notice),
                         getString(R.string.i_got_it)
                     )
                 ).show(

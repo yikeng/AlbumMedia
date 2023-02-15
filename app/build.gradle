@@ -47,6 +47,6 @@ dependencies {
         exclude group: "com.android.support"
     }
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
-//    implementation project(':media')
-    implementation 'com.github.demoned:AlbumMedia:1.0.6'
+    implementation project(':media')
+//    implementation 'com.github.demoned:AlbumMedia:1.0.6'
 }

@@ -36,9 +36,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginHorizontal="18dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="5dp"
-                android:maxLines="1"
+                android:gravity="center"
                 android:text="@{config.votingConfirmDialogTitle}"
                 android:textColor="#333333"
                 android:textSize="16sp"
@@ -48,7 +49,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:maxLines="1"
+                android:layout_marginHorizontal="18dp"
+                android:gravity="center"
                 android:text="@{config.votingConfirmDialogDes}"
                 android:textColor="#999999"
                 android:textSize="14sp"
@@ -78,13 +80,12 @@
                     android:textSize="15sp" />
 
                 <View
-                    android:visibility="@{config.showSingleOperateMode}"
                     android:layout_width="0.5dp"
                     android:layout_height="50dp"
-                    android:background="#E9E9E9" />
+                    android:background="#E9E9E9"
+                    android:visibility="@{config.showSingleOperateMode}" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:visibility="@{config.showSingleOperateMode}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -95,7 +96,8 @@
                     android:text="@{config.votingConfirmDialogRightButtonDes}"
                     android:textColor="#5083FC"
                     android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="@{config.showSingleOperateMode}" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.constraintlayout.widget.ConstraintLayout>
