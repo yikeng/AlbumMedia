@@ -1,13 +1,13 @@
 package com.demons.media.ui.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.demons.media.R
 import com.demons.media.constant.Type
@@ -15,8 +15,8 @@ import com.demons.media.models.ad.AdViewHolder
 import com.demons.media.models.album.entity.Photo
 import com.demons.media.result.Result
 import com.demons.media.setting.Setting
+import com.demons.media.ui.dialog.MediaConfirmDialog
 import com.demons.media.ui.widget.PressedImageView
-import com.demons.media.utils.ToastUtil
 import com.demons.media.utils.media.DurationUtils
 import java.lang.ref.WeakReference
 
@@ -24,7 +24,7 @@ import java.lang.ref.WeakReference
  * 专辑相册适配器
  */
 class PhotosAdapter(
-    private val cxt: Context,
+    private val cxt: AppCompatActivity,
     private val dataList: ArrayList<Any?>,
     private val listener: OnClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -131,12 +131,28 @@ class PhotosAdapter(
                     item.selected = !item.selected
                     if (item.selected) {
                         if (item.type.contains(Type.VIDEO) && item.size > Setting.videoMaxSize) {
-                            ToastUtil.show(cxt, R.string.selector_video_max_size)
+                            MediaConfirmDialog(
+                                MediaConfirmDialog.Config(
+                                    cxt. getString(R.string.selector_video_max_size),
+                                    cxt. getString(R.string.i_got_it)
+                                )
+                            ).show(
+                                cxt. supportFragmentManager,
+                                System.currentTimeMillis().toString()
+                            )
                             item.selected = false
                             return
                         }
                         if (!item.type.contains(Type.VIDEO) && item.size > Setting.photoMaxSize) {
-                            ToastUtil.show(cxt, R.string.selector_photo_max_size)
+                            MediaConfirmDialog(
+                                MediaConfirmDialog.Config(
+                                    cxt. getString(R.string.selector_photo_max_size),
+                                    cxt. getString(R.string.i_got_it)
+                                )
+                            ).show(
+                                cxt. supportFragmentManager,
+                                System.currentTimeMillis().toString()
+                            )
                             item.selected = false
                             return
                         }
