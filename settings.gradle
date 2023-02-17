@@ -16,4 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "AlbumMedia"
 include ':app'
 include ':media'
-//include ':transcoding'
+include ':transcoding'
