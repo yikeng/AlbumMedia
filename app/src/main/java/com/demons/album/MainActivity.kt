@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.media.MediaFormat
 import android.os.Bundle
 import android.os.Environment
 import android.view.Menu
@@ -20,24 +19,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
-import com.demons.album.codec.*
 import com.demons.media.Gallery
 import com.demons.media.callback.PuzzleCallback
 import com.demons.media.callback.SelectCallback
 import com.demons.media.constant.Type
 import com.demons.media.models.album.entity.Photo
 import com.demons.media.setting.Setting
-import com.demons.album.codec.MediaCodecUtils.updateSourceMedia
-import com.demons.album.codec.MediaCodecUtils.updateTrimConfig
 import com.demons.media.utils.permission.PermissionUtil
 import com.google.android.material.navigation.NavigationView
-import com.linkedin.android.litr.MediaTransformer
-import com.linkedin.android.litr.TransformationOptions
-import com.linkedin.android.litr.io.MediaRange
-import java.io.File
 import java.io.FileNotFoundException
-import java.util.*
-import java.util.concurrent.TimeUnit
 
 
 open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -66,7 +56,6 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private var bitmap: Bitmap? = null
     private var bitmapView: ImageView? = null
     private var drawer: DrawerLayout? = null
-    private var mediaTransformer: MediaTransformer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +68,6 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         ) {
             preLoadAlbums()
         }
-        mediaTransformer = MediaTransformer(applicationContext)
     }
 
     /**
@@ -459,27 +447,6 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 selectedPhotoList.addAll(resultPhotos!!)
                 adapter!!.notifyDataSetChanged()
                 rvImage!!.smoothScrollToPosition(0)
-                // TODO: 如果非原视频就做转码压缩处理
-                for (i in resultPhotos) {
-                    if (i.type.contains(Type.VIDEO)) {
-                        val sourceMedia = SourceMedia()
-                        val transformationState =
-                            TransformationState()
-                        val targetMedia = TargetMedia()
-                        val trimConfig = TrimConfig()
-                        updateSourceMedia(this, sourceMedia, i.uri)
-                        updateTrimConfig(trimConfig, sourceMedia)
-                        val targetFile = File(
-                            TransformationUtil.getTargetFileDirectory(applicationContext),
-                            "transcoded_" + TransformationUtil.getDisplayName(this, sourceMedia.uri)
-                        )
-                        targetMedia.setTargetFile(targetFile)
-                        targetMedia.setTracks(sourceMedia.tracks)
-                        transformationState.setState(TransformationState.STATE_IDLE)
-                        transformationState.setStats(null)
-                        transcode(sourceMedia, targetMedia, trimConfig, transformationState)
-                    }
-                }
                 return
             }
 
@@ -493,7 +460,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 selectedPhotoList.addAll(resultPhotos)
                 Gallery.startPuzzleWithPhotos(
                     this, selectedPhotoList,
-                    TransformationUtil.getTargetFileDirectory(applicationContext).absolutePath,
+                    Environment.getExternalStorageDirectory().absolutePath,
                     "AlbumBuilder", 103, false, GlideEngine()
                 )
                 return
@@ -510,57 +477,6 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         } else if (RESULT_CANCELED == resultCode) {
             Toast.makeText(applicationContext, "cancel", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    fun transcode(
-        sourceMedia: SourceMedia,
-        targetMedia: TargetMedia,
-        trimConfig: TrimConfig,
-        transformationState: TransformationState
-    ) {
-        if (targetMedia.targetFile.exists()) {
-            targetMedia.targetFile.delete()
-        }
-
-        transformationState.requestId = UUID.randomUUID().toString()
-        val transformationListener =
-            MediaTransformationListener(
-                this,
-                transformationState.requestId,
-                transformationState,
-                targetMedia
-            )
-
-        val mediaRange = if (trimConfig.enabled) MediaRange(
-            TimeUnit.MILLISECONDS.toMicros((trimConfig.range[0] * 1000).toLong()),
-            TimeUnit.MILLISECONDS.toMicros((trimConfig.range[1] * 1000).toLong())
-        ) else MediaRange(0, Long.MAX_VALUE)
-
-        val transformationOptions = TransformationOptions.Builder()
-            .setGranularity(MediaTransformer.GRANULARITY_DEFAULT)
-            .setSourceMediaRange(mediaRange)
-            .setRemoveMetadata(true)
-            .build()
-
-        val targetVideoFormat = MediaFormat.createVideoFormat(
-            MediaFormat.MIMETYPE_VIDEO_AVC,
-            1280,
-            720
-        ).apply {
-            setInteger(MediaFormat.KEY_BIT_RATE, 2_000_000)
-            setInteger(MediaFormat.KEY_FRAME_RATE, 30)
-            setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 5)
-        }
-
-        mediaTransformer?.transform(
-            transformationState.requestId,
-            sourceMedia.uri,
-            targetMedia.targetFile.path,
-            targetVideoFormat,
-            null,
-            transformationListener,
-            transformationOptions
-        )
     }
 
     override fun onBackPressed() {
