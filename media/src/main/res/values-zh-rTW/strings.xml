@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">AlbumMedia</string>
     <string name="selector_folder_all_easy_photos">所有圖片</string>
     <string name="selector_folder_all_video_photo_easy_photos">圖片和視頻</string>
     <string name="selector_folder_video_easy_photos">所有視頻</string>

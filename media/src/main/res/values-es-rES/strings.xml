@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">AlbumMedia</string>
     <string name="selector_folder_all_easy_photos">todas las imágenes</string>
     <string name="selector_folder_all_video_photo_easy_photos">imágenes y videos</string>
     <string name="selector_folder_video_easy_photos">todos los videos</string>

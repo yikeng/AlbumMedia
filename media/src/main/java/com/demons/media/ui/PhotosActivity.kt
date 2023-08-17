@@ -627,23 +627,45 @@ class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListener,
                         getString(R.string.no_videos_easy_photos),
                         getString(R.string.i_got_it)
                     )
-                ).show(
+                ).apply {
+                    setOnOnOperateListener(object :MediaConfirmDialog.OnOperateListener{
+                        override fun confirm() {
+//                            launchCamera(Code.REQUEST_CAMERA)
+                        }
+
+                        override fun cancel() {
+                            setResult(RESULT_CANCELED)
+                            this@PhotosActivity.finish()
+                        }
+
+                    })
+                }.show(
                     supportFragmentManager,
                     System.currentTimeMillis().toString()
                 )
-                finish()
-                return
             }
-            MediaConfirmDialog(
-                MediaConfirmDialog.Config(
-                    getString(R.string.no_photos_easy_photos),
-                    getString(R.string.i_got_it)
+            else {
+                MediaConfirmDialog(
+                    MediaConfirmDialog.Config(
+                        votingConfirmDialogTitle =  getString(R.string.no_photos_easy_photos),
+                        votingConfirmDialogLeftButtonDes = getString(R.string.i_got_it),
+                    )
+                ).apply {
+                    setOnOnOperateListener(object :MediaConfirmDialog.OnOperateListener{
+                        override fun confirm() {
+//                            launchCamera(Code.REQUEST_CAMERA)
+                        }
+
+                        override fun cancel() {
+                            this@PhotosActivity.finish()
+                        }
+
+                    })
+                }.show(
+                    supportFragmentManager,
+                    System.currentTimeMillis().toString()
                 )
-            ).show(
-                supportFragmentManager,
-                System.currentTimeMillis().toString()
-            )
-            if (Setting.isShowCamera) launchCamera(Code.REQUEST_CAMERA) else finish()
+            }
             return
         }
         Gallery.setAdListener(this)

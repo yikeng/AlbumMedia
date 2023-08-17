@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">AlbumMedia</string>
     <string name="selector_folder_all_easy_photos">모든 사진</string>
     <string name="selector_folder_all_video_photo_easy_photos">사진 및 비디오</string>
     <string name="selector_folder_video_easy_photos">모든 비디오</string>
