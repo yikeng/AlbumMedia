@@ -4,7 +4,7 @@
     android:id="@+id/m_bar_root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    >
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/m_root_view"
@@ -28,7 +28,6 @@
                 android:layout_gravity="top"
                 android:background="@color/photos_bar_primary"
                 android:clickable="true"
-                android:fitsSystemWindows="true"
                 android:focusable="true">
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -112,7 +111,6 @@
         android:layout_gravity="bottom"
         android:background="@color/photos_bar_primary_translation"
         android:clickable="true"
-        android:fitsSystemWindows="true"
         android:focusable="true">
 
         <com.demons.media.ui.widget.PressedTextView

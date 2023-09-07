@@ -1,38 +1,50 @@
 package com.demons.media.ui.dialog
 
 import android.view.View
+import android.widget.TextView
 import com.demons.media.R
-import com.demons.media.databinding.DialogMediaConfirmBinding
 
 /**
  *   @describe 操作提示弹窗页面
  *   @author Yang Qian
  *   @date  2022/12/30 18:13
  */
-class MediaConfirmDialog(private val config: Config) :
-    BaseNoticeDialogFragment<DialogMediaConfirmBinding>() {
+class MediaConfirmDialog(private val config: Config) : BaseNoticeDialogFragment() {
 
-
+    private lateinit var tvTitle:TextView
+    private lateinit var tvDesc:TextView
+    private lateinit var tvCancel:TextView
+    private lateinit var tvConfirm:TextView
+    private lateinit var vLine:TextView
     override fun layoutResId(): Int {
         return R.layout.dialog_media_confirm
     }
 
-    override fun initViews() {
-        vb?.onClickListener = OnClickListener()
-        vb?.config = config
-    }
-
-    inner class OnClickListener {
-        fun cancel() {
+    override fun initViews(view: View) {
+        tvTitle = view.findViewById(R.id.tvTitle)
+        tvDesc = view.findViewById(R.id.tvDesc)
+        tvCancel = view.findViewById(R.id.tvCancel)
+        tvConfirm = view.findViewById(R.id.tvConfirm)
+        vLine = view.findViewById(R.id.vLine)
+        tvCancel.setOnClickListener{
             onOperateListener?.cancel()
             dismiss()
         }
-
-        fun confirm() {
+        tvConfirm.setOnClickListener{
             onOperateListener?.confirm()
             dismiss()
         }
+        tvTitle.text = config.votingConfirmDialogTitle
+        tvDesc.text = config.votingConfirmDialogDes
+        tvDesc.visibility = config.votingConfirmDialogDesIsShow
+
+        tvCancel.text = config.votingConfirmDialogLeftButtonDes
+        tvConfirm.text = config.votingConfirmDialogRightButtonDes
+
+        vLine.visibility = config.showSingleOperateMode
+        tvConfirm.visibility = config.showSingleOperateMode
     }
+
 
     private  var onOperateListener: OnOperateListener?=null
 
@@ -44,8 +56,7 @@ class MediaConfirmDialog(private val config: Config) :
         fun confirm()
         fun cancel()
     }
-
-    class Config(
+    data class Config(
         //确认弹窗标题
         var votingConfirmDialogTitle: String = "",
         //确认弹窗左边按钮描述

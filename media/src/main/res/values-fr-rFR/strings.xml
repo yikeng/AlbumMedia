@@ -23,7 +23,6 @@
     <string name="permissions_again_easy_photos">Veuillez cliquer et autoriser les autorisations</string>
     <string name="permissions_die_easy_photos">Veuillez cliquer et autoriser les autorisations appropriées dans les paramètres</string>
     <string name="original_easy_photos">Image originale</string>
-    <string name="preview_current_number_easy_photos">%1$d/%2$d</string>
     <string name="done_easy_photos">Terminé</string>
     <string name="cancel_easy_photos">Annuler</string>
     <string name="template_easy_photos">modèle</string>

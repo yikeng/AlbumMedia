@@ -23,8 +23,8 @@ public class Setting {
     public static long minSize = 1;
     public static int count = 1;
 
-    public static int videoMaxSize = 50 * 1048576;
-    public static int photoMaxSize = 16 * 1048576;
+    public static int videoMaxSize = 500 * 1048576;
+    public static int photoMaxSize = 64 * 1048576;
 
     public static WeakReference<View> photosAdView = null;
     public static WeakReference<View> albumItemsAdView = null;

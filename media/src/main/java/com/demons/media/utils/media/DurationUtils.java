@@ -3,6 +3,8 @@ package com.demons.media.utils.media;
 import android.media.MediaMetadataRetriever;
 import android.text.format.DateUtils;
 
+import java.io.IOException;
+
 /**
  * DurationUtils
  * Create By lishilin On 2019/3/25
@@ -20,12 +22,18 @@ public class DurationUtils {
         try {
             mmr = new MediaMetadataRetriever();
             mmr.setDataSource(path);
-            return Long.parseLong(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+            String duration = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+            if (duration != null) {
+                return Long.parseLong(duration);
+            }
         } catch (Exception e) {
 //            e.printStackTrace();
         } finally {
             if (mmr != null) {
-                mmr.release();
+                try {
+                    mmr.close();
+                } catch (IOException e) {
+                }
             }
         }
         return 0;

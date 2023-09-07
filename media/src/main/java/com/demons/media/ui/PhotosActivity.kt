@@ -73,7 +73,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @SuppressLint("ObjectAnimatorBinding")
-class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListener,
+open class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListener,
     PhotosAdapter.OnClickListener, AdListener, View.OnClickListener {
     private var mTempImageFile: File? = null
     private var albumModel: AlbumModel? = null
@@ -184,23 +184,33 @@ class PhotosActivity : AppCompatActivity(), AlbumItemsAdapter.OnClickListener,
 
     protected val needPermissions: Array<String>
         get() = if (Setting.isShowCamera) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 arrayOf(
                     Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.READ_MEDIA_VIDEO,
+                )
+            }
+            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                arrayOf(
+                    Manifest.permission.CAMERA,
                     Manifest.permission.READ_EXTERNAL_STORAGE
                 )
             } else arrayOf(
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.CAMERA
             )
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 arrayOf(
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.READ_MEDIA_VIDEO
                 )
-            } else arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            }
+            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                )
+            } else arrayOf()
         }
 
     override fun onRequestPermissionsResult(

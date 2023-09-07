@@ -1,104 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <data>
-
-        <import type="com.demons.media.ui.dialog.MediaConfirmDialog.OnClickListener" />
-
-        <variable
-            name="onClickListener"
-            type="OnClickListener" />
-
-        <import type="com.demons.media.ui.dialog.MediaConfirmDialog.Config" />
-
-        <variable
-            name="config"
-            type="Config" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:background="@drawable/shape_voting_round_bg"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="18dp"
+            android:gravity="center"
+            android:textColor="#999999"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="26dp"
+            android:background="#E9E9E9" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="40dp"
-            android:background="@drawable/shape_voting_round_bg"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tvCancel"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="18dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:text="@{config.votingConfirmDialogTitle}"
+                android:maxLines="1"
+                android:paddingVertical="15dp"
                 android:textColor="#333333"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="18dp"
-                android:gravity="center"
-                android:text="@{config.votingConfirmDialogDes}"
-                android:textColor="#999999"
-                android:textSize="14sp"
-                android:visibility="@{config.votingConfirmDialogDesIsShow}" />
+                android:textSize="15sp" />
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="26dp"
+                android:id="@+id/vLine"
+                android:layout_width="0.5dp"
+                android:layout_height="50dp"
                 android:background="#E9E9E9" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvConfirm"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:onClick="@{()->onClickListener.cancel()}"
-                    android:paddingVertical="15dp"
-                    android:text="@{config.votingConfirmDialogLeftButtonDes}"
-                    android:textColor="#333333"
-                    android:textSize="15sp" />
-
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="50dp"
-                    android:background="#E9E9E9"
-                    android:visibility="@{config.showSingleOperateMode}" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:onClick="@{()->onClickListener.confirm()}"
-                    android:paddingVertical="15dp"
-                    android:text="@{config.votingConfirmDialogRightButtonDes}"
-                    android:textColor="#5083FC"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:visibility="@{config.showSingleOperateMode}" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingVertical="15dp"
+                android:textColor="#5083FC"
+                android:textSize="15sp"
+                android:textStyle="bold" />
         </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

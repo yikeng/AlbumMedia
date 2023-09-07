@@ -23,7 +23,6 @@
     <string name="permissions_again_easy_photos">관련 권한을 클릭하고 허용하십시오.</string>
     <string name="permissions_die_easy_photos">설정에서 관련 권한을 클릭하고 허용하십시오.</string>
     <string name="original_easy_photos">원본 그림 </string>
-    <string name="preview_current_number_easy_photos">%1d%2d</string>
     <string name="done_easy_photos">완료 </string>
     <string name="cancel_easy_photos">취소</string>
     <string name="template_easy_photos">template</string>

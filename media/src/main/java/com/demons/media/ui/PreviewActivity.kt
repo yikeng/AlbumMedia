@@ -183,7 +183,7 @@ class PreviewActivity : AppCompatActivity(), PreviewPhotosAdapter.OnClickListene
         if (!SystemUtils.getInstance().hasNavigationBar(this)) {
             val mRootView = findViewById<View>(R.id.m_root_view) as LinearLayoutCompat
             mRootView.fitsSystemWindows = true
-            mToolBar!!.setPadding(0, SystemUtils.getInstance().getStatusBarHeight(this), 0, 0)
+//            mToolBar!!.setPadding(0, SystemUtils.getInstance().getStatusBarHeight(this), 0, 0)
             if (ColorUtils.isWhiteColor(statusColor)) {
                 SystemUtils.getInstance().setStatusDark(this, true)
             }

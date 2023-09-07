@@ -5,11 +5,8 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.annotation.LayoutRes
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 
@@ -18,12 +15,8 @@ import androidx.fragment.app.FragmentManager
  * @describe 弹窗基类
  * @date 2022/12/2
  */
-abstract class BaseNoticeDialogFragment<T : ViewDataBinding?> : DialogFragment() {
-    companion object {
-        val TAG: String = BaseNoticeDialogFragment::class.java.simpleName
-    }
+abstract class BaseNoticeDialogFragment : DialogFragment() {
 
-    protected var vb: T? = null
     private var defaultWidth = WindowManager.LayoutParams.MATCH_PARENT //宽
     private var defaultHeight = WindowManager.LayoutParams.WRAP_CONTENT //高
     private var defaultGravity = Gravity.CENTER //位置
@@ -34,10 +27,9 @@ abstract class BaseNoticeDialogFragment<T : ViewDataBinding?> : DialogFragment()
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        vb = DataBindingUtil.inflate(inflater, layoutResId(), container, false)
-        vb?.lifecycleOwner = this
-        initViews()
-        return vb?.root
+        val view = inflater.inflate(layoutResId(), container, true)
+        initViews(view)
+        return view
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -118,7 +110,7 @@ abstract class BaseNoticeDialogFragment<T : ViewDataBinding?> : DialogFragment()
      *
      * @param view
      */
-    protected abstract fun initViews()
+    protected abstract fun initViews(view: View)
 
     override fun dismiss() {
         dialog?.apply {
@@ -137,7 +129,6 @@ abstract class BaseNoticeDialogFragment<T : ViewDataBinding?> : DialogFragment()
                 transaction.show(this)
             }
         } catch (e: Exception) {
-            Log.e(TAG,"$e")
         }
     }
 

@@ -23,7 +23,6 @@
     <string name="permissions_again_easy_photos">請點擊並允許相關權限</string>
     <string name="permissions_die_easy_photos">請點擊並在設置中允許相關權限</string>
     <string name="original_easy_photos">原圖</string>
-    <string name="preview_current_number_easy_photos">%1d%2d</string>
     <string name="done_easy_photos">完成</string>
     <string name="cancel_easy_photos">取消</string>
     <string name="template_easy_photos">模板</string>
